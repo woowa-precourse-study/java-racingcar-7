@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import racingcar.utils.Constant;
 
 public class Application {
 
@@ -13,18 +14,17 @@ public class Application {
     // TODO: 프로그램 구현
 
     // Console 부분
-    System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
+    System.out.println(Constant.REQUIRE_CAR_NAMES);
     String[] cars = Console.readLine().split(",");
     for (String car : cars) {
-      if (!Pattern.matches("^[a-z]{1,5}$", car)) {
-        throw new IllegalArgumentException("차량 이름 양식 오류");
+      if (!Pattern.matches(Constant.REGEX_CAR_NAME, car)) {
+        throw new IllegalArgumentException(Constant.CAR_NAME_ERROR);
       }
     }
-    System.out.println("시도할 회수는 몇회인가요?");
-    //int tryNumber = Integer.parseInt(Console.readLine());
+    System.out.println(Constant.REQUIRE_TRY_NUMBER);
     String tryNumber = Console.readLine();
-    if (!Pattern.matches("[0-9]$", tryNumber)) {
-      throw new IllegalArgumentException("시도 회수 양식 오류");
+    if (!Pattern.matches(Constant.REGEX_TRY_NUMBER, tryNumber)) {
+      throw new IllegalArgumentException(Constant.TRY_NUMBER_ERROR);
     }
     int tryNumberInt = Integer.parseInt(tryNumber);
 
