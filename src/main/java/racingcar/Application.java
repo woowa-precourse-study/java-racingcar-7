@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import racingcar.console.InputConsole;
+import racingcar.console.ResultConsole;
+import racingcar.race.Race;
 
 public class Application {
 
@@ -16,36 +18,15 @@ public class Application {
     String[] cars = input.inputCarNames();
     int tryNumberInt = input.inputTryNumber();
 
-    //moveCar 부분
-    HashMap<String,Integer> carInfo = new HashMap<>();
-    for(String car : cars){
-      carInfo.put(car,0);
-    }
-    while(tryNumberInt > 0) {
-      for(String car : cars){
-        int currentPosition = carInfo.get(car);
-        int randomNumber = Randoms.pickNumberInRange(0,9);
-        if(randomNumber >=4) {
-          currentPosition++;
-          carInfo.put(car,currentPosition);
-        }
-        System.out.println(car + " : " +  "-".repeat(currentPosition));
-      }
-      System.out.println();
-      tryNumberInt--;
-    }
-    // 우승자 출력
-    int maxDistance = carInfo.values()
-            .stream()
-            .max(Integer::compareTo)
-            .orElse(0); // 최댓값 구하기
+    //Race 부분
+    Race race = new Race();
+    HashMap<String,Integer> carInfo = race.setCarInfo(cars);
+    race.startRace(tryNumberInt,cars,carInfo);
 
-    List<String> winners = carInfo.entrySet()
-            .stream()
-            .filter(entry -> entry.getValue() == maxDistance) // 최댓값과 같은 차량 필터링
-            .map(Map.Entry::getKey) // 차량 이름만 추출
-            .toList();
-    System.out.println("우승자 : " + String.join(",", winners));
+    // 우승자 출력
+    ResultConsole resultConsole = new ResultConsole();
+    int maxDistance = resultConsole.getMaxDistance(carInfo);
+    resultConsole.printResult(carInfo,maxDistance);
   }
 
 }
