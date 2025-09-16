@@ -1,13 +1,10 @@
 package racingcar;
 
-import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-import racingcar.utils.Constant;
-import racingcar.utils.Validators;
+import racingcar.console.InputConsole;
 
 public class Application {
 
@@ -15,13 +12,9 @@ public class Application {
     // TODO: 프로그램 구현
 
     // Console 부분
-    System.out.println(Constant.REQUIRE_CAR_NAMES);
-    String[] cars = Console.readLine().split(",");
-    Validators.validateCarName(cars);
-    System.out.println(Constant.REQUIRE_TRY_NUMBER);
-    String tryNumber = Console.readLine();
-    Validators.validateTryNumber(tryNumber);
-    int tryNumberInt = Integer.parseInt(tryNumber);
+    InputConsole input = new InputConsole();
+    String[] cars = input.inputCarNames();
+    int tryNumberInt = input.inputTryNumber();
 
     //moveCar 부분
     HashMap<String,Integer> carInfo = new HashMap<>();
