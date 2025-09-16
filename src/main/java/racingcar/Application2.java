@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import racingcar.utils.Constant;
-import racingcar.utils.Validators;
 
-public class Application {
+public class Application2 {
 
   public static void main(String[] args) {
     // TODO: 프로그램 구현
@@ -17,10 +16,16 @@ public class Application {
     // Console 부분
     System.out.println(Constant.REQUIRE_CAR_NAMES);
     String[] cars = Console.readLine().split(",");
-    Validators.validateCarName(cars);
+    for (String car : cars) {
+      if (!Pattern.matches(Constant.REGEX_CAR_NAME, car)) {
+        throw new IllegalArgumentException(Constant.CAR_NAME_ERROR);
+      }
+    }
     System.out.println(Constant.REQUIRE_TRY_NUMBER);
     String tryNumber = Console.readLine();
-    Validators.validateTryNumber(tryNumber);
+    if (!Pattern.matches(Constant.REGEX_TRY_NUMBER, tryNumber)) {
+      throw new IllegalArgumentException(Constant.TRY_NUMBER_ERROR);
+    }
     int tryNumberInt = Integer.parseInt(tryNumber);
 
     //moveCar 부분
