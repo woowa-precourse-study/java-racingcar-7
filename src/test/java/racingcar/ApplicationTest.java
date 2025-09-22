@@ -22,7 +22,13 @@ class ApplicationTest extends NsTest {
             MOVING_FORWARD, STOP
         );
     }
-
+    @Test
+    void 입력_테스트_입력값_없음(){
+        assertSimpleTest(()->
+                assertThatThrownBy(() -> run(""))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
     @Test
     void 예외_테스트() {
         assertSimpleTest(() ->
