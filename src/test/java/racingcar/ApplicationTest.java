@@ -25,7 +25,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 입력_테스트_입력값_없음(){
         assertSimpleTest(()->
-                assertThatThrownBy(() -> run(""))
+                assertThatThrownBy(() -> run("",""))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }

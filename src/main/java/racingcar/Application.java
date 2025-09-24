@@ -1,29 +1,28 @@
 package racingcar;
 
 import java.util.HashMap;
-import racingcar.console.InputConsole;
-import racingcar.console.ResultConsole;
-import racingcar.race.Race;
+import java.util.List;
+import racingcar.controller.RaceController;
+import racingcar.domain.Cars;
+import racingcar.service.RaceService;
+import racingcar.view.RaceView;
 
 public class Application {
 
   public static void main(String[] args) {
-    // TODO: 프로그램 구현
 
-    // InputConsole 부분
-    InputConsole input = new InputConsole();
-    String[] cars = input.inputCarNames();
-    int tryNumberInt = input.inputTryNumber();
+    RaceController raceController = new RaceController();
+    String[] carNames = raceController.inputCarNames();
+    int tryNumberInt = raceController.inputTryNumber();
 
-    //Race 부분
-    Race race = new Race();
-    HashMap<String,Integer> carInfo = race.setCarInfo(cars);
-    race.startRace(tryNumberInt,cars,carInfo);
+    RaceService raceService = new RaceService();
 
-    // ResultConsole 부분
-    ResultConsole resultConsole = new ResultConsole();
-    int maxDistance = resultConsole.getMaxDistance(carInfo);
-    resultConsole.printResult(carInfo,maxDistance);
+    Cars cars = new Cars(carNames);
+    raceService.startRace(tryNumberInt, cars);
+
+    List<String> winners = raceService.findWinner(cars);
+    RaceView raceView = new RaceView();
+    raceView.printWinner(winners);
   }
 
 }
