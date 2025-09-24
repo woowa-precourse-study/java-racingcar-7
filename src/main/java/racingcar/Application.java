@@ -1,9 +1,9 @@
 package racingcar;
 
-import java.util.HashMap;
 import java.util.List;
 import racingcar.controller.RaceController;
 import racingcar.domain.Cars;
+import racingcar.domain.Race;
 import racingcar.service.RaceService;
 import racingcar.view.RaceView;
 
@@ -20,7 +20,7 @@ public class Application {
     Cars cars = new Cars(carNames);
     raceService.startRace(tryNumberInt, cars);
 
-    List<String> winners = raceService.findWinner(cars);
+    List<String> winners = Race.findWinner(cars);
     RaceView raceView = new RaceView();
     raceView.printWinner(winners);
   }
