@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ApplicationTest extends NsTest {
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
+    private static final String OVERFLOW_INTEGER = String.valueOf(Integer.MAX_VALUE) + "1";
 
     @Test
     void 기능_테스트() {
@@ -112,6 +113,22 @@ class ApplicationTest extends NsTest {
     void 자동차개수_0개_테스트() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException(" , , , ", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할_횟수_입력_오류_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", "-1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할_횟수_오버플로우_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", OVERFLOW_INTEGER))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
