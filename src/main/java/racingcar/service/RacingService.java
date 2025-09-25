@@ -1,40 +1,38 @@
 package racingcar.service;
 
-import racingcar.domain.Cars.Car;
 import racingcar.domain.Cars;
-import racingcar.util.Validator;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import static racingcar.util.ParseInt.parseInt;
+import static racingcar.util.Split.split;
 import static racingcar.util.Validator.*;
 
 public class RacingService {
+    public Cars getCars(String inputCarNames) {
+        validateBlank(inputCarNames);
 
-    public Cars startRace(String inputCarNames, int raceCount) {
-        validateNull(inputCarNames);
-
-        String[] splitCarNames = inputCarNames.split(",");
+        String[] splitCarNames = split(inputCarNames);
         validateLength(splitCarNames);
-        Cars cars = Cars.of(splitCarNames);
 
-        cars.runRace(raceCount);
-
-        return cars;
+        return Cars.of(splitCarNames);
     }
 
     public int getRaceCount(String inputRaceCount) {
-        validateNull(inputRaceCount);
-        return parseInt(inputRaceCount);
+        validateBlank(inputRaceCount);
+
+        int raceCount = parseInt(inputRaceCount);
+
+        validateOverflow(inputRaceCount, raceCount);
+
+        return raceCount;
+    }
+
+    public void runRace(Cars cars, int raceCount) {
+        cars.runRace(raceCount);
     }
 
     public String decideWinners(Cars cars) {
-        int maxSteps = cars.getMaxSteps();
+        int winnerSteps = cars.getWinnerSteps();
 
-        return cars.getWinners(maxSteps);
+        return cars.getWinners(winnerSteps);
     }
 }

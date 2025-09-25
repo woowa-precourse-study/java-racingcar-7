@@ -3,11 +3,13 @@ package racingcar.util;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static racingcar.constant.ErrorMessage.*;
+
 public class Validator {
 
-    public static void validateNull(String input) {
-        if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException();
+    public static void validateBlank(String input) {
+        if (input.isBlank()) {
+            throw new IllegalArgumentException(ONLY_WHITESPACE_ERROR.getErrorMessage());
         }
     }
 
@@ -17,13 +19,13 @@ public class Validator {
                 .filter(s -> s.length() > 5)
                 .toList();
         if (!carNames.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(MAXIMUM_LENGTH_ERROR.getErrorMessage());
         }
     }
 
-    public static void validateOverflow(String inputRaceCount) {
-        if (inputRaceCount.compareTo(String.valueOf(Integer.MAX_VALUE)) > 0) {
-            throw new IllegalArgumentException();
+    public static void validateOverflow(String inputRaceCount, int raceCount) {
+        if (!inputRaceCount.equals(String.valueOf(raceCount))) {
+            throw new IllegalArgumentException(INTEGER_OVERFLOW_ERROR.getErrorMessage());
         }
     }
 }

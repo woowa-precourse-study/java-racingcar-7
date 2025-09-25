@@ -11,10 +11,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ApplicationTest extends NsTest {
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
-    private static final String OVERFLOW_INTEGER = String.valueOf(Integer.MAX_VALUE) + "1";
+    private static final String OVERFLOW_INTEGER = "2147483648";
 
     @Test
-    void 기능_테스트() {
+    void 기본_케이스_테스트() {
         assertRandomNumberInRangeTest(
             () -> {
                 run("pobi,woni", "1");
@@ -28,11 +28,9 @@ class ApplicationTest extends NsTest {
     void 공동우승_테스트() {
         assertRandomNumberInRangeTest(
                 () -> {
-                    run("pobi,경현,woni", "3");
-                    // 두 명의 진행 상태 확인
-                    // "최종 우승자 : pobi, woni" 혹은 "최종 우승자 : woni, pobi" 둘 다 허용
-                    assertThat(output()).contains("pobi : ---", "경현 : ---", "woni : ---",
-                            "최종 우승자 : pobi, 경현, woni");
+                    run("pobi,woni", "3");
+                    assertThat(output()).contains("pobi : ---", "woni : ---",
+                            "최종 우승자 : pobi, woni");
                 },
                 MOVING_FORWARD
         );
@@ -43,8 +41,6 @@ class ApplicationTest extends NsTest {
         assertRandomNumberInRangeTest(
                 () -> {
                     run("pobi,,woni", "2");
-                    // 두 명의 진행 상태 확인
-                    // "최종 우승자 : pobi"
                     assertThat(output()).contains("pobi : --", "woni : -", "최종 우승자 : pobi");
                 },
                 MOVING_FORWARD, STOP, MOVING_FORWARD
@@ -56,8 +52,6 @@ class ApplicationTest extends NsTest {
         assertRandomNumberInRangeTest(
                 () -> {
                     run("   pobi,woni   ", "1");
-                    // 두 명의 진행 상태 확인
-                    // "최종 우승자 : pobi"
                     assertThat(output()).contains("pobi : -", "woni : ", "최종 우승자 : pobi");
                 },
                 MOVING_FORWARD, STOP
@@ -69,8 +63,6 @@ class ApplicationTest extends NsTest {
         assertRandomNumberInRangeTest(
                 () -> {
                     run("pobi1,$woni", "1");
-                    // 두 명의 진행 상태 확인
-                    // "최종 우승자 : pobi"
                     assertThat(output()).contains("pobi1 : -", "$woni : ", "최종 우승자 : pobi1");
                 },
                 MOVING_FORWARD, STOP
@@ -79,14 +71,6 @@ class ApplicationTest extends NsTest {
 
     @Test
     void 입력값_공백_테스트() {
-        assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("   ", "1"))
-                        .isInstanceOf(IllegalArgumentException.class)
-        );
-    }
-
-    @Test
-    void 입력값_null_테스트() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("   ", "1"))
                         .isInstanceOf(IllegalArgumentException.class)
@@ -128,7 +112,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 시도할_횟수_오버플로우_테스트() {
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("pobi,woni", OVERFLOW_INTEGER))
+                assertThatThrownBy(() -> runException("pobi,woni", "2147483648"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }

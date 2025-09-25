@@ -8,13 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static racingcar.constant.ErrorMessage.*;
+
 public class Cars {
     private final List<Car> cars;
     private final List<String> races;
 
-    private Cars(List<Car> cars) {
+    public Cars(List<Car> cars, List<String> races) {
         this.cars = cars;
-        races = new ArrayList<>();
+        this.races = races;
     }
 
     public static Cars of(String[] inputCarNames) {
@@ -22,23 +24,21 @@ public class Cars {
                 .filter(s -> !s.isBlank())
                 .map(Car::new)
                 .toList();
-        return new Cars(cars);
+        return new Cars(cars, new ArrayList<>());
     }
 
     public void runRace(int raceCount) {
-
         for (int i = 0; i < raceCount; i++) {
             cars.stream()
                     .filter(car -> car.pickNumber() >= 4)
                     .forEach(Car::go);
 
-            StringBuilder race = new StringBuilder();
+            StringBuilder steps = new StringBuilder();
             cars.stream()
-                    .map(Car::getRaceResult)
-                    .forEach(race::append);
+                    .map(Car::getStepsResult)
+                    .forEach(steps::append);
 
-            System.out.println(race.toString());
-            races.add(race.toString());
+            races.add(steps.toString());
         }
     }
 
@@ -46,51 +46,50 @@ public class Cars {
         return races.get(i);
     }
 
-    public int getMaxSteps() {
-        Optional<Car> maxCars = cars
+    public int getWinnerSteps() {
+        Optional<Car> winnerCar = cars
                 .stream()
                 .max(Comparator.comparing(car -> car.raceCount));
-        if (maxCars.isEmpty()) {
-            throw new IllegalArgumentException(); // 자동차 없음
+        if (winnerCar.isEmpty()) {
+            throw new IllegalArgumentException(NO_CAR_ERROR.getErrorMessage()); // 자동차 없음
         }
-        return maxCars.get().raceCount;
+        return winnerCar.get().raceCount;
     }
 
-    public String getWinners(int maxSteps) {
-        List<Car> winners = getWinnersList(maxSteps);
+    public String getWinners(int winnerSteps) {
+        List<Car> winnersList = getWinnersList(winnerSteps);
 
-        StringBuilder winnersResult = new StringBuilder();
-        for (int i = 0; i < winners.size(); i++) {
-            String race = winners.get(i).name;
-            winnersResult.append(race);
-            if (i != winners.size() - 1) {
-                winnersResult.append(", ");
+        StringBuilder winners = new StringBuilder();
+        for (int i = 0; i < winnersList.size(); i++) {
+            String race = winnersList.get(i).name;
+            winners.append(race);
+            if (i != winnersList.size() - 1) {
+                winners.append(", ");
             }
         }
 
-        return winnersResult.toString();
+        return winners.toString();
     }
 
-    private List<Car> getWinnersList(int maxSteps) {
+    private List<Car> getWinnersList(int winnerSteps) {
         return cars.stream()
-                .filter(car -> car.raceCount == maxSteps)
+                .filter(car -> car.raceCount == winnerSteps)
                 .toList();
     }
 
-
     public static class Car {
         private final String name;
-        private String race;
+        private String steps;
         private int raceCount;
         private static final String STEP = "-";
 
         public Car(String name) {
             this.name = name;
-            race = "";
+            steps = "";
         }
 
-        public String getRaceResult() {
-            return name + " : " + race + "\n";
+        public String getStepsResult() {
+            return name + " : " + steps + "\n";
         }
 
         public int pickNumber() {
@@ -98,7 +97,7 @@ public class Cars {
         }
 
         public void go() {
-            race += STEP;
+            steps += STEP;
             raceCount++;
         }
     }

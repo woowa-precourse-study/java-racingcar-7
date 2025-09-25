@@ -11,7 +11,7 @@ public class InputView {
         return Console.readLine().strip();
     }
 
-    public String readCount() {
+    public String readRaceCount() {
         System.out.println(NUMBER_INPUT_MESSAGE);
         return Console.readLine().strip();
     }

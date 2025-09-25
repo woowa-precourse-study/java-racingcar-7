@@ -18,10 +18,13 @@ public class RacingController {
 
     public void run() {
         String inputCarNames = inputView.readCarNames();
-        String inputRaceCount = inputView.readCount();
+        String inputRaceCount = inputView.readRaceCount();
+
+        Cars cars = service.getCars(inputCarNames);
         int raceCount = service.getRaceCount(inputRaceCount);
-        Cars cars = service.startRace(inputCarNames, raceCount);
+        service.runRace(cars, raceCount);
         String winners = service.decideWinners(cars);
+
         outputView.printRace(cars, raceCount);
         outputView.printWinners(winners);
     }
