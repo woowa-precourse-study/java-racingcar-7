@@ -2,6 +2,8 @@ package racingcar.service;
 
 import racingcar.domain.Cars;
 
+import java.util.List;
+
 import static racingcar.util.ParseInt.parseInt;
 import static racingcar.util.Split.split;
 import static racingcar.util.Validator.*;
@@ -10,8 +12,10 @@ public class RacingService {
     public Cars getCars(String inputCarNames) {
         validateBlank(inputCarNames);
 
-        String[] splitCarNames = split(inputCarNames);
+        List<String> splitCarNames = split(inputCarNames);
+
         validateLength(splitCarNames);
+        validateNoCars(splitCarNames);
 
         return Cars.of(splitCarNames);
     }

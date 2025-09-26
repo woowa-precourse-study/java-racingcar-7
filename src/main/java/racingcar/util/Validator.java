@@ -1,8 +1,8 @@
 package racingcar.util;
 
 import java.util.List;
-import java.util.stream.Stream;
 
+import static racingcar.constant.Constant.NAME_MAX_LENGTH;
 import static racingcar.constant.ErrorMessage.*;
 
 public class Validator {
@@ -13,13 +13,24 @@ public class Validator {
         }
     }
 
-    public static void validateLength(String[] splitCarNames) {
-        List<String> carNames = Stream.of(splitCarNames)
+    public static void validateLength(List<String> splitCarNames) {
+        List<String> carNames = splitCarNames
+                .stream()
                 .filter(s -> !s.isBlank())
-                .filter(s -> s.length() > 5)
+                .filter(s -> s.strip().length() > NAME_MAX_LENGTH)
                 .toList();
         if (!carNames.isEmpty()) {
             throw new IllegalArgumentException(MAXIMUM_LENGTH_ERROR.getErrorMessage());
+        }
+    }
+
+    public static void validateNoCars(List<String> splitCarNames) {
+        List<String> carNames = splitCarNames
+                .stream()
+                .filter(s -> !s.isBlank())
+                .toList();
+        if (carNames.isEmpty()) {
+            throw new IllegalArgumentException(NO_CAR_ERROR.getErrorMessage());
         }
     }
 

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
+import static racingcar.constant.Constant.*;
 import static racingcar.constant.ErrorMessage.*;
 
 public class Cars {
@@ -19,8 +19,9 @@ public class Cars {
         this.races = races;
     }
 
-    public static Cars of(String[] inputCarNames) {
-        List<Car> cars = Stream.of(inputCarNames)
+    public static Cars of(List<String> inputCarNames) {
+        List<Car> cars = inputCarNames
+                .stream()
                 .filter(s -> !s.isBlank())
                 .map(Car::new)
                 .toList();
@@ -30,7 +31,7 @@ public class Cars {
     public void runRace(int raceCount) {
         for (int i = 0; i < raceCount; i++) {
             cars.stream()
-                    .filter(car -> car.pickNumber() >= 4)
+                    .filter(car -> car.pickNumber() >= GO_THRESHOLD)
                     .forEach(Car::go);
 
             StringBuilder steps = new StringBuilder();
@@ -93,7 +94,7 @@ public class Cars {
         }
 
         public int pickNumber() {
-            return Randoms.pickNumberInRange(0, 9);
+            return Randoms.pickNumberInRange(RANDOM_FROM, RANDOM_TO);
         }
 
         public void go() {

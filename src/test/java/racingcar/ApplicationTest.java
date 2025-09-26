@@ -51,7 +51,7 @@ class ApplicationTest extends NsTest {
     void 입력값_양쪽_공백_테스트() {
         assertRandomNumberInRangeTest(
                 () -> {
-                    run("   pobi,woni   ", "1");
+                    run("   pobi,woni   ", "    1   ");
                     assertThat(output()).contains("pobi : -", "woni : ", "최종 우승자 : pobi");
                 },
                 MOVING_FORWARD, STOP
@@ -70,9 +70,28 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 입력값_공백_테스트() {
+    void 각_자동차이름_양쪽_공백__테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("  pobi   ,    woni  ", "1");
+                    assertThat(output()).contains("pobi : -", "woni : ", "최종 우승자 : pobi");
+                },
+                MOVING_FORWARD, STOP
+        );
+    }
+
+    @Test
+    void 자동차이름_입력값_공백_테스트() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("   ", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할횟수_입력값_공백_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", "  "))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
