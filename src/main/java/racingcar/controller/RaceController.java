@@ -9,7 +9,11 @@ public class RaceController {
 
   public String[] inputCarNames() {
     System.out.println(Message.REQUIRE_CAR_NAMES);
-    String[] cars = Console.readLine().split(",");
+    String[] input = Console.readLine().split(",");
+    String[] cars = new String[input.length];
+    for(int i = 0 ; i < input.length ; i++) {
+      cars[i] = input[i].trim();
+    }
     Validator.validateCarName(cars);
     return cars;
   }

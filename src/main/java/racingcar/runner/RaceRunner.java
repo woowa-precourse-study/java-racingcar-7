@@ -14,9 +14,9 @@ public class RaceRunner {
     String[] carNames = raceController.inputCarNames();
     int tryNumber = raceController.inputTryNumber();
 
-    RaceService raceService = new RaceService();
-
     Cars cars = new Cars(carNames);
+
+    RaceService raceService = new RaceService();
     raceService.startRace(tryNumber, cars);
 
     List<String> winners = Race.findWinner(cars);

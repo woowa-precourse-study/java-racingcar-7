@@ -14,9 +14,7 @@ public class Race {
       if (randomNumber >= 4) {
         car.updateDistance();
       }
-      System.out.println(car.getName() + " : " + "-".repeat(car.getDistance()));
     }
-    System.out.println();
   }
 
   public static List<String> findWinner(Cars cars) {
