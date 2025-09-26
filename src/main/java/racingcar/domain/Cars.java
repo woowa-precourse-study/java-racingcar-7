@@ -14,11 +14,12 @@ public class Cars {
     private final List<Car> cars;
     private final List<String> races;
 
-    public Cars(List<Car> cars, List<String> races) {
+    private Cars(List<Car> cars, List<String> races) {
         this.cars = cars;
         this.races = races;
     }
 
+    // 자동차 리스트 생성 및 반환
     public static Cars of(List<String> inputCarNames) {
         List<Car> cars = inputCarNames
                 .stream()
@@ -28,12 +29,15 @@ public class Cars {
         return new Cars(cars, new ArrayList<>());
     }
 
+    // 자동차 경주 진행
     public void runRace(int raceCount) {
         for (int i = 0; i < raceCount; i++) {
             cars.stream()
                     .filter(car -> car.pickNumber() >= GO_THRESHOLD)
                     .forEach(Car::go);
 
+            // 진행 과정 출력 문자열 저장
+            // 성능 최적화를 위해 StringBuilder 사용
             StringBuilder steps = new StringBuilder();
             cars.stream()
                     .map(Car::getStepsResult)
@@ -43,10 +47,12 @@ public class Cars {
         }
     }
 
+    // 각 라운드 진행 과정 출력 문자열 반환 -> OutputView 에서 호출
     public String getRace(int i) {
         return races.get(i);
     }
 
+    // 우승자 step 개수 반환
     public int getWinnerSteps() {
         Optional<Car> winnerCar = cars
                 .stream()
@@ -57,6 +63,7 @@ public class Cars {
         return winnerCar.get().raceCount;
     }
 
+    // 우승자 출력 문자열 반환
     public String getWinners(int winnerSteps) {
         List<Car> winnersList = getWinnersList(winnerSteps);
 
@@ -72,12 +79,14 @@ public class Cars {
         return winners.toString();
     }
 
+    // 우승자 리스트 반환
     private List<Car> getWinnersList(int winnerSteps) {
         return cars.stream()
                 .filter(car -> car.raceCount == winnerSteps)
                 .toList();
     }
 
+    // Cars 에서만 사용하는 Car 클래스
     public static class Car {
         private final String name;
         private String steps;

@@ -9,7 +9,7 @@ public class OutputView {
     public void printRace(Cars cars, int raceCount) {
         System.out.println(RESULT_MESSAGE);
         for (int i = 0; i < raceCount; i++) {
-            System.out.println(cars.getRace(i));
+            System.out.println(cars.getRace(i)); // 매 라운드 진행 과정 출력
         }
     }
 
