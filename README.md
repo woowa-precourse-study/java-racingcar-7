@@ -77,4 +77,4 @@
 - [x] 로직에 중요한 역할을 하는 상수는 따로 관리(Constant)
 - [x] Service 에서 split 메서드 반환값을 배열에서 리스트로 수정
 - [x] validateNoCars 메서드 추가
-- [ ] 주석 추가
+- [x] 주석 추가
