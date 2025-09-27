@@ -78,3 +78,4 @@
 - [x] Service 에서 split 메서드 반환값을 배열에서 리스트로 수정
 - [x] validateNoCars 메서드 추가
 - [x] 주석 추가
+- [x] 우승자 출력 문자열을 반환하는 메서드에서 StringBuilder 대신 String.join 메서드 사용
