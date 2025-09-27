@@ -18,22 +18,21 @@ WinnersFinder
 */
 
 import racingcar.domain.Car;
-import racingcar.domain.CarNameVerifier;
-import racingcar.domain.RoundVerifier;
+import racingcar.domain.CarNameValidator;
+import racingcar.domain.RoundValidator;
 import camp.nextstep.edu.missionutils.Randoms;
-import racingcar.domain.WinnersFinder;
+import racingcar.domain.WinnerCalculator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RacingCarService {
     public static final String PLAY_MSG = "실행 결과";
 
-    public static final CarNameVerifier carNameVerifier = new CarNameVerifier();
-    public static final RoundVerifier roundVerifier = new RoundVerifier();
-    public static final WinnersFinder winnersFinder = new WinnersFinder();
+    public static final CarNameValidator carNameVerifier = new CarNameValidator();
+    public static final RoundValidator roundVerifier = new RoundValidator();
+    public static final WinnerCalculator winnersFinder = new WinnerCalculator();
 
-    public List<Car> playRacingCar(String rawCarNames, int rawRound) {
+    public List<Car> startRace(String rawCarNames, int rawRound) {
         // CarNameVerifier
         List<Car> carList =  carNameVerifier.createCarList(rawCarNames);
 

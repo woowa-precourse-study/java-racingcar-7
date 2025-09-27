@@ -7,7 +7,7 @@ package racingcar.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WinnersFinder {
+public class WinnerCalculator {
     public List<Car> findWinners(List<Car> cars) {
         int maxPosition = 0;
         List<Car> winners = new ArrayList<>();

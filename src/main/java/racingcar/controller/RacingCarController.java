@@ -10,6 +10,6 @@ public class RacingCarController {
     private final ResultView resultView = new ResultView();
 
     public void run(){
-        resultView.printResult(racingCarService.playRacingCar(inputView.readCarNames(), inputView.readRound()));
+        resultView.printResult(racingCarService.startRace(inputView.readCarNames(), inputView.readRound()));
     }
 }
