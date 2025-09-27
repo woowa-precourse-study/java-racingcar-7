@@ -1,12 +1,16 @@
 package racingcar.domain;
 
 public class Car {
-    private String carName;
+    private final String carName; // carName은 불변이니까
     private int position;
 
     public Car(String carName) {
+        this(carName, 0);
+    }
+
+    public Car(String carName, int position) {
         this.carName = carName;
-        this.position = 0;
+        this.position = position;
     }
 
     public String getCarName() {
@@ -17,7 +21,9 @@ public class Car {
         return position;
     }
 
-    public void move() {
-        position++;
+    public void moveIfPossible(Mover mover) {
+        if (mover.canMove()) {
+            position++;
+        }
     }
 }

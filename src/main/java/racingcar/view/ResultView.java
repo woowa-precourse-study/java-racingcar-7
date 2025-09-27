@@ -7,15 +7,19 @@ import java.util.List;
 public class ResultView {
     private static final String RESULT_MSG = "최종 우승자 : ";
     
-    public void printResult(List<Car> winners) {
-        StringBuilder resultString = new StringBuilder(RESULT_MSG);
-
-        // 람다로 써보기
-        for(int i=0; i<winners.size() - 1; i++) {
-            resultString.append(winners.get(i).getCarName()).append(", ");
+    public void printRaceHistory(List<List<Car>> raceHistory) {
+        System.out.println("실행 결과");
+        for (List<Car> round : raceHistory) {
+            for (Car car : round) {
+                System.out.println(car.getCarName() + " : " + "-".repeat(car.getPosition()));
+            }
+            System.out.println();
         }
-        resultString.append(winners.get(winners.size() - 1).getCarName());
+    }
 
-        System.out.println(resultString);
+    public void printWinners(List<Car> winners) {
+        String names = String.join(", ",
+                winners.stream().map(Car::getCarName).toList());
+        System.out.println(RESULT_MSG + names);
     }
 }

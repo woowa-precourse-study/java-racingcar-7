@@ -1,8 +1,11 @@
 package racingcar.controller;
 
+import racingcar.domain.Car;
 import racingcar.service.RacingCarService;
 import racingcar.view.InputView;
 import racingcar.view.ResultView;
+
+import java.util.List;
 
 public class RacingCarController {
     private final InputView inputView = new InputView();
@@ -10,6 +13,12 @@ public class RacingCarController {
     private final ResultView resultView = new ResultView();
 
     public void run(){
-        resultView.printResult(racingCarService.startRace(inputView.readCarNames(), inputView.readRound()));
-    }
+        String rawCarNames = inputView.readCarNames();
+        int round = inputView.readRound();
+
+        List<List<Car>> raceHistory = racingCarService.startRace(rawCarNames, round);
+        resultView.printRaceHistory(raceHistory);
+
+        List<Car> winners = racingCarService.getWinners(raceHistory);
+        resultView.printWinners(winners);    }
 }
