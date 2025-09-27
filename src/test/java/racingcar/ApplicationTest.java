@@ -81,7 +81,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 자동차이름_입력값_공백_테스트() {
+    void 자동차이름_입력값_공백_테스트1() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("   ", "1"))
                         .isInstanceOf(IllegalArgumentException.class)
@@ -89,9 +89,33 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 시도할횟수_입력값_공백_테스트() {
+    void 자동차이름_입력값_공백_테스트2() {
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("pobi,woni", "  "))
+                assertThatThrownBy(() -> runException("", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 자동차이름_입력값_공백_테스트3() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException(""))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할횟수_입력값_공백_테스트1() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", " "))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할횟수_입력값_공백_테스트2() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", ""))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -131,7 +155,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 시도할_횟수_오버플로우_테스트() {
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("pobi,woni", "2147483648"))
+                assertThatThrownBy(() -> runException("pobi,woni", OVERFLOW_INTEGER))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }

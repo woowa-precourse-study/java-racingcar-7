@@ -67,16 +67,12 @@ public class Cars {
     public String getWinners(int winnerSteps) {
         List<Car> winnersList = getWinnersList(winnerSteps);
 
-        StringBuilder winners = new StringBuilder();
-        for (int i = 0; i < winnersList.size(); i++) {
-            String race = winnersList.get(i).name;
-            winners.append(race);
-            if (i != winnersList.size() - 1) {
-                winners.append(", ");
-            }
-        }
+        List<String> winners = winnersList
+                .stream()
+                .map(car -> car.name)
+                .toList();
 
-        return winners.toString();
+        return String.join(", ", winners);
     }
 
     // 우승자 리스트 반환
