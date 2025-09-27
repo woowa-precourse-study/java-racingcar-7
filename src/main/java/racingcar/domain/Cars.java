@@ -34,14 +34,14 @@ public class Cars {
         for (int i = 0; i < raceCount; i++) {
             cars.stream()
                     .filter(car -> car.pickNumber() >= GO_THRESHOLD)
-                    .forEach(Car::go);
+                    .forEachOrdered(Car::go);
 
             // 진행 과정 출력 문자열 저장
             // 성능 최적화를 위해 StringBuilder 사용
             StringBuilder steps = new StringBuilder();
             cars.stream()
                     .map(Car::getStepsResult)
-                    .forEach(steps::append);
+                    .forEachOrdered(steps::append);
 
             races.add(steps.toString());
         }
