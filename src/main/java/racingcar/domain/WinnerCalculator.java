@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WinnerCalculator {
-    public List<Car> findWinners(List<Car> cars) {
+    public List<Car> calculate(List<Car> cars) {
         int maxPosition = 0;
         List<Car> winners = new ArrayList<>();
 
