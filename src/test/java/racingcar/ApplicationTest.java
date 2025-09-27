@@ -11,9 +11,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ApplicationTest extends NsTest {
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
+    private static final String OVERFLOW_INTEGER = "2147483648";
 
     @Test
-    void 기능_테스트() {
+    void 기본_케이스_테스트() {
         assertRandomNumberInRangeTest(
             () -> {
                 run("pobi,woni", "1");
@@ -24,10 +25,138 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 예외_테스트() {
+    void 공동우승_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,woni", "3");
+                    assertThat(output()).contains("pobi : ---", "woni : ---",
+                            "최종 우승자 : pobi, woni");
+                },
+                MOVING_FORWARD
+        );
+    }
+
+    @Test
+    void 쉼표_2개_이상_연속_입력_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,,woni", "2");
+                    assertThat(output()).contains("pobi : --", "woni : -", "최종 우승자 : pobi");
+                },
+                MOVING_FORWARD, STOP, MOVING_FORWARD
+        );
+    }
+
+    @Test
+    void 입력값_양쪽_공백_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("   pobi,woni   ", "    1   ");
+                    assertThat(output()).contains("pobi : -", "woni : ", "최종 우승자 : pobi");
+                },
+                MOVING_FORWARD, STOP
+        );
+    }
+
+    @Test
+    void 자동차이름_숫자_기호_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi1,$woni", "1");
+                    assertThat(output()).contains("pobi1 : -", "$woni : ", "최종 우승자 : pobi1");
+                },
+                MOVING_FORWARD, STOP
+        );
+    }
+
+    @Test
+    void 각_자동차이름_양쪽_공백__테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("  pobi   ,    woni  ", "1");
+                    assertThat(output()).contains("pobi : -", "woni : ", "최종 우승자 : pobi");
+                },
+                MOVING_FORWARD, STOP
+        );
+    }
+
+    @Test
+    void 자동차이름_입력값_공백_테스트1() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("   ", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 자동차이름_입력값_공백_테스트2() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 자동차이름_입력값_공백_테스트3() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException(""))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할횟수_입력값_공백_테스트1() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", " "))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할횟수_입력값_공백_테스트2() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", ""))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 자동차이름_5자_초과_테스트() {
         assertSimpleTest(() ->
             assertThatThrownBy(() -> runException("pobi,javaji", "1"))
                 .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 자동차이름_공백포함_5자_초과_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,kh cho", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 자동차개수_0개_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException(" , , , ", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할_횟수_입력_오류_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", "-1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 시도할_횟수_오버플로우_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("pobi,woni", OVERFLOW_INTEGER))
+                        .isInstanceOf(IllegalArgumentException.class)
         );
     }
 
