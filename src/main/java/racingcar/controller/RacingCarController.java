@@ -14,11 +14,12 @@ public class RacingCarController {
 
     public void run(){
         String rawCarNames = inputView.readCarNames();
-        int round = inputView.readRound();
+        int rawRound = inputView.readRound(); // 변수명 일관성
 
-        List<List<Car>> raceHistory = racingCarService.startRace(rawCarNames, round);
+        List<List<Car>> raceHistory = racingCarService.startRace(rawCarNames, rawRound);
         resultView.printRaceHistory(raceHistory);
 
-        List<Car> winners = racingCarService.getWinners(raceHistory);
-        resultView.printWinners(winners);    }
+        List<Car> winners = racingCarService.getWinners(raceHistory); // raceHistory 객체라니 진짜 짱이다
+        resultView.printWinners(winners);
+    }
 }

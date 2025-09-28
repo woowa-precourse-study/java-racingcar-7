@@ -7,7 +7,7 @@ public class InputView {
     private static final String ROUND_INPUT_MSG = "시도할 회수는 몇회인가요?";
 
     public String readCarNames() {
-        System.out.println(CARNAMES_INPUT_MSG);
+        System.out.println(CARNAMES_INPUT_MSG); // REQUEST MSG라는 말이 더 맘에 들어
         return Console.readLine().strip();
     }
 
