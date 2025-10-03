@@ -22,6 +22,18 @@ class ApplicationTest extends NsTest {
             MOVING_FORWARD, STOP
         );
     }
+//여러번 실행했을떄 결과 나와야함
+    @Test
+    void 기능_테스트_여러번() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,woni,jun", "5");
+                    assertThat(output()).contains("pobi : -----", "woni : ----","jun : -----", "최종 우승자 : pobi, jun");
+                },
+                MOVING_FORWARD, STOP,MOVING_FORWARD
+        );
+    }
+
 
     /**
      * 자동차 예외 테스트
