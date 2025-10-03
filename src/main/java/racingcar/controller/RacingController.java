@@ -1,15 +1,11 @@
 package racingcar.controller;
 
 import camp.nextstep.edu.missionutils.Console;
-import net.bytebuddy.build.Plugin;
 import racingcar.domain.Car;
-import racingcar.exception.ErrorMessage;
 import racingcar.service.RacingService;
+import racingcar.utils.Validator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class RacingController {
 
@@ -21,19 +17,20 @@ public class RacingController {
 
     // 컨트롤러 메인 함수
     public void playGame(){
+
         // 자동차 이름 입력 요청
         printMessage(PrintMessage.REQUEST_CAR_NAME);
         String carString=getInput();
-        checkBlank(carString);
+        Validator.checkBlank(carString);
         List<String> carNameList=splitCarList(carString);
-        checkCarNameLength(carNameList);
-        checkCarNameUnique(carNameList);
+        Validator.checkCarNameLength(carNameList);
+        Validator.checkCarNameUnique(carNameList);
 
         // 시도 횟수 입력 요청
         printMessage(PrintMessage.REQUEST_TRY_COUNT);
         String tryString=getInput();
-        checkBlank(tryString);
-        checkTryCount(tryString);
+        Validator.checkBlank(tryString);
+        Validator.checkTryCount(tryString);
 
         // 결과 출력
         printMessage(PrintMessage.RACING_RESULT_TITLE);
@@ -67,45 +64,12 @@ public class RacingController {
         return inputString;
     }
 
-    // 입력값 유효성 검사
-    public void checkBlank(String inputString){
-        if (inputString.isBlank()){
-            throw new IllegalArgumentException(ErrorMessage.EMPTY_STRING);
-        }
-    }
-
     // 자동차 입력값 가공
     public List<String> splitCarList(String inputString){
         List<String> carList=List.of(inputString.split(","));
         return carList;
     }
 
-    // 입력값 유효성 검사
-    public void checkCarNameLength(List<String> carList){
-        for (String carName:carList){
-            if (carName.length()>=6){
-                throw new IllegalArgumentException(ErrorMessage.TOO_LONG_CAR_NAME);
-            }
-        }
-    }
 
-    // 입력값 유효성 검사
-    public void checkCarNameUnique(List<String> carList){
-        Set<String> seen = new HashSet<>();
-        for (String carName : carList) {
-            if (!seen.add(carName)) {  // add()가 false면 이미 존재
-                throw new IllegalArgumentException(ErrorMessage.SAME_CAR_NAME);
-            }
-        }
-    }
-
-    public void checkTryCount(String inputString){
-        try{
-            Integer.parseInt(inputString);
-        } catch(NumberFormatException e){
-            throw new IllegalArgumentException(ErrorMessage.INVALID_TRY);
-        }
-
-    }
 
 }
