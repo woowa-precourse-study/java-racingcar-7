@@ -17,6 +17,17 @@ public class InputView {
         return input;
     }
 
+    public int readTryNumber() {
+        System.out.println("시도할 회수는 몇회인가요?");
+        String input = readInput(List.of(
+                Validator::validateNotBlank,
+                Validator::validatePositiveNumber
+        ));
+        return Integer.parseInt(input);
+    }
+
+
+
     private String readInput(List<Validator> validators) {
         try{
             String input = Console.readLine().trim();

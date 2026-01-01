@@ -25,6 +25,10 @@ public class RacingController {
             Validator.validateMaxLength(name);
         }
 
+        int tryNumber = inputView.readTryNumber();
+
+
+
 
 
 
