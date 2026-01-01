@@ -23,18 +23,15 @@ public class RacingService {
     }
 
     public List<String> getWinners(List<Car> cars) {
-        List<String> winners = new ArrayList<>();
-        int score=-1;
-        for (Car car: cars){
-            if (car.getPosition()>score){
-                winners = new ArrayList<>();
-                score=car.getPosition();
-            }
-            if (score==car.getPosition()){
-                winners.add(car.getName());
-            }
-        }
-        return winners;
+        int maxPosition = cars.stream()
+                .mapToInt(Car::getPosition)
+                .max()
+                .orElse(0);
+
+        return cars.stream()
+                .filter(car -> car.getPosition() == maxPosition)
+                .map(Car::getName)
+                .toList();
     }
 
 

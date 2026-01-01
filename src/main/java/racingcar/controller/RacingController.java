@@ -15,8 +15,7 @@ public class RacingController {
     }
 
     public void run() {
-        String input = inputView.readMessage();
-        List<String> names=Parser.splitBy(input,",");
+        List<String> names=inputView.readMessage();
         List<Car> cars = service.enrollCars(names);
 
         int tryNumber = inputView.readTryNumber();
