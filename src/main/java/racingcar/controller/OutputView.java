@@ -13,8 +13,13 @@ public class OutputView {
 
     public static void printRoundResult(List<Car> cars){
         for (Car car:cars){
-            System.out.println(String.format("%s : %s",car.getName(),"-".repeat(car.getPosition())));
+            System.out.printf("%s : %s\n",car.getName(),"-".repeat(car.getPosition()));
         }
+        System.out.println();
+    }
+
+    public static void printWinnerResult(List<String> winners){
+        System.out.printf("최종 우승자 : %s\n", String.join(", ",winners));
     }
 }
 
