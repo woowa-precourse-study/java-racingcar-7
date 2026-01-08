@@ -1,5 +1,7 @@
 package racingcar.domain;
 
+import racingcar.utils.RandomGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,20 @@ public class CarGroup {
 
     public void addResult(Result result){
         results.add(result);
+    }
+
+    public void playGame(){
+        Result result = new Result();
+        for (Car car : cars){
+            int randomNum = RandomGenerator.getRandomNumber();
+            car.move(randomNum);
+            result.addCarResult(car.getName(),car.getPosition());
+        }
+        addResult(result);
+    }
+
+    public List<Result> getResults(){
+        return results;
     }
 
     private void validateUniqueName(Car car) {

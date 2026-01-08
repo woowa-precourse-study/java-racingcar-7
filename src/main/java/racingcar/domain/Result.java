@@ -10,4 +10,8 @@ public class Result {
     public void addCarResult(String name, int position){
         result.put(name,position);
     }
+
+    public Map<String, Integer> getResult() {
+        return result;
+    }
 }

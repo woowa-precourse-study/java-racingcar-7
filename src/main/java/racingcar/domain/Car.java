@@ -17,6 +17,19 @@ public class Car {
         }
     }
 
+    public void move(int num){
+        if (num>=4){
+            position++;
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPosition() {
+        return position;
+    }
 
     @Override
     public boolean equals(Object o) {
