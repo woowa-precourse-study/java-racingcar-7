@@ -2,7 +2,6 @@ package racingcar.controller;
 
 import racingcar.domain.Car;
 import racingcar.domain.CarGroup;
-import racingcar.domain.Result;
 import racingcar.service.Service;
 
 import java.util.List;
@@ -30,6 +29,8 @@ public class Controller {
         }
 
         OutputView.printResult(carGroup.getResults());
+
+        OutputView.printWinner(carGroup.getWinners());
 
     }
 
