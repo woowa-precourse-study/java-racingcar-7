@@ -29,7 +29,6 @@ public class Controller {
         }
 
         OutputView.printResult(carGroup.getResults());
-
         OutputView.printWinner(carGroup.getWinners());
 
     }
